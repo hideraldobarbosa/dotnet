@@ -1,0 +1,22 @@
+[
+  {
+    "outputFileName": "wwwroot/css/modelo_bundle.min.css",
+    "inputFiles": [
+      "wwwroot/lib/bootstrap/css/bootstrap.css",
+      "wwwroot/css/modelo.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/modelo_bundle.min.js",
+    "inputFiles": [
+      "wwwroot/lib/jquery/jquery.js",
+      "wwwroot/js/modelo.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/bootstrap/js/bootstrap.min.js",
+    "inputFiles": [
+      "wwwroot/lib/bootstrap/js/bootstrap.js"
+    ]
+  }
+]

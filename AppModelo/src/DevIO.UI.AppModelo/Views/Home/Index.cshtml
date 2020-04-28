@@ -1,0 +1,7 @@
+﻿@*forma não ideal para injeção de dependencias*@
+
+@using DevIO.UI.AppModelo.Data
+@inject IPedidoRepository PedidoRepository
+Ola!
+
+@PedidoRepository.ObterPedido().Id;
