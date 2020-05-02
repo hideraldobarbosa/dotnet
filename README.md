@@ -9,7 +9,7 @@
 Oportunidade de Desenvolver uma skill muito interessante através de situações reais em projetos dentro de video aulas
 contemplando o Padrão de desenvolvimento MVC e também aprofundando em code first 
 
-## Básico - Tópicos 
+## Tópicos do Curso
 
 ### 
 
@@ -33,7 +33,9 @@ contemplando o Padrão de desenvolvimento MVC e também aprofundando em code fir
 
 9 - Segurança com ASP .NET Identity 
 
-10 - Configurações Identity
+10 - Configurações Identity 
+
+	(Autenticação, Autorizações, Roles, Claims, Customização de APP) 
 
 11 - Desenvolvimento de uma aplicação completa
 
