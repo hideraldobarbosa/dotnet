@@ -14,17 +14,25 @@ using Microsoft.Extensions.Hosting;
 using AspNetCoreIdentity.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using AspNetCoreIdentity.Config;
+using IHostingEnvironment = Microsoft.Extensions.Hosting.IHostingEnvironment;
 
 namespace AspNetCoreIdentity
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IConfiguration Configuration { get; }
+
+        public Startup(IHostingEnvironment hostEnvironment )
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(hostEnvironment.ContentRootPath)
+                .AddJsonFile("appsettings.json", true, true)
+                .AddJsonFile($"appsettings.{hostEnvironment.EnvironmentName}.json", true, true)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
         }
 
-        public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentityConfig(Configuration);
