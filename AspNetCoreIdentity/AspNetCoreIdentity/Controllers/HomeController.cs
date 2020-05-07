@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AspNetCoreIdentity.Models;
 using Microsoft.AspNetCore.Authorization;
-using static AspNetCoreIdentity.Extensions.CustomAuthorization;
 using AspNetCoreIdentity.Extensions;
 
 namespace AspNetCoreIdentity.Controllers
@@ -15,13 +10,7 @@ namespace AspNetCoreIdentity.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
+       
         [AllowAnonymous]
         public IActionResult Index()
         {
@@ -31,6 +20,7 @@ namespace AspNetCoreIdentity.Controllers
 
         public IActionResult Privacy()
         {
+            throw new Exception("erro");
             return View();
         }
 
@@ -58,10 +48,37 @@ namespace AspNetCoreIdentity.Controllers
             return View("Secret");
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [Route("erro/{id:length(3,3)}")]
+        public IActionResult Error(int id)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var modelErro = new ErrorViewModel();
+            if (id == 500)
+            {
+                modelErro.Mensagem = "Ocorreu um erro! Tente novamente mais tarde ou contate nosso suporte.";
+                modelErro.Titulo = "Ocorreu um erro";
+                modelErro.ErroCode = id;
+            }
+            else if (id == 404)
+            {
+                modelErro.Mensagem = "A pagina que está procurando não existe. <br/>Em cado de duvidas entre em contato com nosso suporte";
+                modelErro.Titulo = "Ops! Pagina não encontrada";
+                modelErro.ErroCode = id;
+
+            }
+            else if (id == 403)
+            {
+                modelErro.Mensagem = "Voce não tem permissão para executar esta tarefa.";
+                modelErro.Titulo = "Ops! Acesso Negado";
+                modelErro.ErroCode = id;
+
+            }
+            else
+            {
+                return StatusCode(404);
+            }
+
+
+            return View("Error",modelErro);
         }
     }
 }

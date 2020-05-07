@@ -1,18 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AspNetCoreIdentity.Areas.Identity.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using AspNetCoreIdentity.Extensions;
-using Microsoft.AspNetCore.Authorization;
 using AspNetCoreIdentity.Config;
 using IHostingEnvironment = Microsoft.Extensions.Hosting.IHostingEnvironment;
 
@@ -29,6 +19,12 @@ namespace AspNetCoreIdentity
                 .AddJsonFile("appsettings.json", true, true)
                 .AddJsonFile($"appsettings.{hostEnvironment.EnvironmentName}.json", true, true)
                 .AddEnvironmentVariables();
+
+            if (hostEnvironment.IsProduction())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
+
             Configuration = builder.Build();
         }
 
@@ -53,9 +49,12 @@ namespace AspNetCoreIdentity
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/erro/500");
+                app.UseStatusCodePagesWithRedirects("/erro/(0)");
                 app.UseHsts();
             }
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -69,6 +68,7 @@ namespace AspNetCoreIdentity
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
         }
     }
 }
